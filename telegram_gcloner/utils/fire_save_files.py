@@ -113,8 +113,8 @@ class MySaveFileThread(threading.Thread):
             progress_size_percentage_10 = 0
             regex_checked_files = r'Checks:\s+(\d+)\s+/\s+(\d+)'
             regex_total_files = r'Transferred:\s+(\d+) / (\d+), (\d+)%(?:,\s*([\d.]+\sFiles/s))?'
-            regex_total_size = r'Transferred:[\s]+([\d.]+\s*[kMGTP]?) / ([\d.]+[\s]?[kMGTP]?B),' \
-                               r'\s*(?:\-|(\d+)\%),\s*([\d.]+\s*[kMGTP]?B/s),\s*ETA\s*([\-0-9hmsdwy]+)'
+            regex_total_size = r'Transferred:[\s]+([\d.]+\s*[kMGTP]?) / ([\d.]+[\s]?[kMGTP]?Bytes),' \
+                               r'\s*(?:\-|(\d+)\%),\s*([\d.]+\s*[kMGTP]?Bytes/s),\s*ETA\s*([\-0-9hmsdwy]+)'
             message_progress_last = ''
             message_progress = ''
             progress_update_time = datetime.datetime.now() - datetime.timedelta(minutes=5)
@@ -155,7 +155,7 @@ class MySaveFileThread(threading.Thread):
                         progress_total_check_files = int(match_checked_files.group(2))
                     progress_max_percentage_10 = max(progress_size_percentage_10, progress_file_percentage_10)
                     message_progress = '<b>📁 ️Source:</b> <a href="https://drive.google.com/open?id={}">{}</a>\n' \
-                                       '<b>🔁 Duplicate Checks:</b> {} / {}\n' \
+                                       '<b>🔍 Duplicate Checks:</b> {} / {}\n' \
                                        '<b>📤 Transferred Items:</b> {} / {}\n' \
                                        '<b>♻️ Cloned:</b> {} / {}\n{}' \
                                        '<b>🚀 Speed:</b> {}\n' \
@@ -236,7 +236,7 @@ class MySaveFileThread(threading.Thread):
             try:
                 link = gd.get_folder_link(dest_folder['folder_id'], destination_path)
                 if link:
-                    link_text = '👉<a href="{}">Link</a>'.format(link)
+                    link_text = '<a href="{}">Here Is Your Link</a>'.format(link)
             except Exception as e:
                 logger.info(str(e))
 
