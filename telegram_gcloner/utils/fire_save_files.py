@@ -36,7 +36,7 @@ class MySaveFileThread(threading.Thread):
         chat_id = update.effective_chat.id
         user_id = update.effective_user.id
         gd = GoogleDrive(user_id)
-        message = 'Target directory：{}\n\n'.format(dest_folder['path'])
+        message = '<b>Target Directory:</b> {}\n\n'.format(dest_folder['path'])
         inline_keyboard = InlineKeyboardMarkup(
             [[InlineKeyboardButton(text=f'Stop', callback_data=f'stop_task,{thread_id}')]])
 
@@ -160,7 +160,7 @@ class MySaveFileThread(threading.Thread):
                                        '<b>♻️ Cloned:</b> {} / {}\n{}' \
                                        '<b>🚀 Speed:</b> {}\n' \
                                        '<b>⏳ ETA:</b> {}\n' \
-                                       '{} - {}%' \
+                                       '{} - {}%\n' \
                         .format(
                         folder_id,
                         html.escape(destination_path),
@@ -263,7 +263,7 @@ class MySaveFileThread(threading.Thread):
             if self.critical_fault is True:
                 break
 
-        message += 'Finished.'
+        message += '<b>Process Finished.</b>'
         try:
             context.bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=message,
                                           parse_mode=ParseMode.HTML, disable_web_page_preview=True)
