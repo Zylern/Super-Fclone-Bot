@@ -164,7 +164,7 @@ class MySaveFileThread(threading.Thread):
                         .format(
                         folder_id,
                         html.escape(destination_path),
-                        '■' * progress_file_percentage_10 + '□' * (10 - progress_file_percentage_10)
+                        '■' * progress_file_percentage_10 + '□' * (10 - progress_file_percentage_10),
                         progress_file_percentage,
                         progress_checked_files,
                         progress_total_check_files,
