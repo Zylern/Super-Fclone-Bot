@@ -113,8 +113,8 @@ class MySaveFileThread(threading.Thread):
             progress_size_percentage_10 = 0
             regex_checked_files = r'Checks:\s+(\d+)\s+/\s+(\d+)'
             regex_total_files = r'Transferred:\s+(\d+) / (\d+), (\d+)%(?:,\s*([\d.]+\sFiles/s))?'
-            regex_total_size = r'Transferred:[\s]+([\d.]+\s*[kMGTP]?) / ([\d.]+[\s]?[kMGTP]?Bytes),' \
-                               r'\s*(?:\-|(\d+)\%),\s*([\d.]+\s*[kMGTP]?Bytes/s),\s*ETA\s*([\-0-9hmsdwy]+)'
+            regex_total_size = r'Transferred:[\s]+([\d.]+\s*[kMGTP]?) / ([\d.]+[\s]?[kMGTP]?B),' \
+                               r'\s*(?:\-|(\d+)\%),\s*([\d.]+\s*[kMGTP]?B/s),\s*ETA\s*([\-0-9hmsdwy]+)'
             message_progress_last = ''
             message_progress = ''
             progress_update_time = datetime.datetime.now() - datetime.timedelta(minutes=5)
@@ -154,29 +154,27 @@ class MySaveFileThread(threading.Thread):
                         progress_checked_files = int(match_checked_files.group(1))
                         progress_total_check_files = int(match_checked_files.group(2))
                     progress_max_percentage_10 = max(progress_size_percentage_10, progress_file_percentage_10)
-                    message_progress = '📤 Source: <a href="https://drive.google.com/open?id={}">{}</a>\n' \
-                                       '🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹\n' \
-                                       '🔍 Existing checks： {} / {}\n' \
-                                       '📄 Transfers： <code>{}</code> / {}\n' \
-                                       '📦 Size：<code>{}</code> / {}\n{}' \
-                                       '🛰 Bandwidth speed：<code>{}</code>\n' \
-                                       '⏰ Estimated time：<code>{}</code>\n' \
-                                       '⏳ Progress：{}\n' \
-                                       '📈 Percentage：<code>{}%</code>' \
+                    message_progress = '<b>📁 ️Source:</b> <a href="https://drive.google.com/open?id={}">{}</a>\n' \
+                                       '[{}] - {}\n' \
+                                       '<b>🔁 Duplicate Checks:</b> {} / {}\n' \
+                                       '<b>📤 Transferred Items:</b> {} of {}\n' \
+                                       '<b>♻️ Cloned:</b> {} / {}\n{}' \
+                                       '<b>🚀 Speed:</b> {}\n' \
+                                       '<b>⏳ ETA:</b> {}\n' \
                         .format(
                         folder_id,
                         html.escape(destination_path),
+                        '■' * progress_file_percentage_10 + '□' * (10 - progress_file_percentage_10)
+                        progress_file_percentage,
                         progress_checked_files,
                         progress_total_check_files,
                         progress_transferred_file,
                         progress_total_files,
                         progress_transferred_size,
                         progress_total_size,
-                        f'🚀 File speed：<code>{progress_speed_file}</code>\n' if is_fclone is True else '',
+                        f'<b>🗄️ File Speed:</b> {progress_speed_file}\n' if is_fclone is True else '',
                         progress_speed,
-                        progress_eta,
-                        '✅' * progress_file_percentage_10 + '☑️' * (10 - progress_file_percentage_10),
-                        progress_file_percentage)
+                        progress_eta)
 
                     match = re.search(r'Failed to copy: failed to make directory', output)
                     if match:
