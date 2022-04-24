@@ -3,6 +3,7 @@
 import html
 import logging
 import re
+import time
 from telegram import ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Dispatcher, CallbackQueryHandler
 from utils.fire_save_files import MySaveFileThread, thread_pool
@@ -168,3 +169,5 @@ def save_to_folder(update, context):
     logger.debug('User {} has added task {}.'.format(query.from_user.id, t.ident))
     query.message.edit_reply_markup(reply_markup=InlineKeyboardMarkup(
         [[InlineKeyboardButton(text='Executed', callback_data='#')]]))
+    time.sleep(3)
+    query.delete()
