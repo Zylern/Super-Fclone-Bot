@@ -170,4 +170,4 @@ def save_to_folder(update, context):
     query.message.edit_reply_markup(reply_markup=InlineKeyboardMarkup(
         [[InlineKeyboardButton(text='Executed', callback_data='#')]]))
     time.sleep(3)
-    query.delete()
+    query.message.delete()
