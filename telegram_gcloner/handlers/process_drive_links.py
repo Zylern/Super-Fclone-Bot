@@ -169,5 +169,5 @@ def save_to_folder(update, context):
     logger.debug('User {} has added task {}.'.format(query.from_user.id, t.ident))
     query.message.edit_reply_markup(reply_markup=InlineKeyboardMarkup(
         [[InlineKeyboardButton(text='Executed', callback_data='#')]]))
-    time.sleep(3)
+    time.sleep(2)
     query.message.delete()
